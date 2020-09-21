@@ -40,3 +40,9 @@ jobs:
         run: yarn build
         env:
           CI: true
+
+      - name: Publish
+        if: github.ref == 'refs/heads/master'
+        run: echo 'OK'
+        env:
+          CI: true

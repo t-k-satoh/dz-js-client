@@ -1,5 +1,15 @@
 {
   "extends": [
     "config:base"
+  ],
+  "timezone": "Asia/Tokyo",
+  "baseBranches": ["develop"],
+  "schedule": ["before 2am"],
+  "rangeStrategy": "pin",
+  "packageRules": [
+    {
+      "updateTypes": ["patch", "pin", "digest"],
+      "automerge": true
+    }
   ]
 }
