@@ -36,6 +36,9 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
+      - run:
+          name: Add Git Config
+          command: git config --global user.email "$GIT_AUTHOR_EMAIL" && git config --global user.name "$GIT_AUTHOR_NAME"
       - node/install:
           install-yarn: true
       - run:
