@@ -40,6 +40,12 @@ jobs:
         run: yarn build
         env:
           CI: true
+    
+      - name: Authenticate with registry
+        if: github.ref == 'refs/heads/master'
+        run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/repo/.npmrc
+        env:
+          CI: true
 
       - name: Publish
         if: github.ref == 'refs/heads/master'
