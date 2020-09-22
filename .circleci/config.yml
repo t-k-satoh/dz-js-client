@@ -31,9 +31,36 @@ jobs:
       - run:
           name: Build
           command: yarn build
+  publish:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - run:
+          name: 依存関係をインストール
+          command: yarn install --frozen-lockfile
+      - run:
+          name: リリース
+          command: yarn release
+      - run:
+          name: Build
+          command: yarn build
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: npm publish
 orbs:
   node: circleci/node@4.0.0
 workflows:
   build_app:
     jobs:
       - build
+      - publish:
+          filters:
+            branches:
+              only:
+                - master
