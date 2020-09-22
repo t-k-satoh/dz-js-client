@@ -36,6 +36,8 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
       - run:
           name: 依存関係をインストール
           command: yarn install --frozen-lockfile
@@ -50,6 +52,9 @@ jobs:
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
+      - run:
+          name: Add Tags
+          command: git push --follow-tags origin master
       - run:
           name: Publish package
           command: npm publish
