@@ -38,7 +38,9 @@ jobs:
       - checkout
       - run:
           name: Add Git Config
-          command: git config --global user.email "$GIT_AUTHOR_EMAIL" && git config --global user.name "$GIT_AUTHOR_NAME"
+          command:  |
+            git config --global user.email "$GIT_AUTHOR_EMAIL"
+            git config --global user.name "$GIT_AUTHOR_NAME"
       - node/install:
           install-yarn: true
       - run:
@@ -57,7 +59,9 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
       - run:
           name: Add Tags
-          command: git push --follow-tags origin master
+          command: |
+            git remote set-url origin https://$GIT_AUTHOR_NAME:$GITHUB_PERSONAL_ACCESS_TOKEN@github.com/<org>/<repo>.git
+            git push --follow-tags origin master
       - run:
           name: Publish package
           command: npm publish
