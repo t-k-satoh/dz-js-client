@@ -31,48 +31,9 @@ jobs:
       - run:
           name: Build
           command: yarn build
-  publish:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - checkout
-      - run:
-          name: Add Git Config
-          command:  |
-            git config --global user.email "$GIT_AUTHOR_EMAIL"
-            git config --global user.name "$GIT_AUTHOR_NAME"
-      - node/install:
-          install-yarn: true
-      - run:
-          name: 依存関係をインストール
-          command: yarn install --frozen-lockfile
-      - run:
-          name: リリース
-          command: yarn release
-      - run:
-          name: Build
-          command: yarn build
-      - attach_workspace:
-          at: ~/repo
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$npm_TOKEN" > ~/repo/.npmrc
-      - run:
-          name: Add Tags
-          command: |
-            git remote set-url origin https://$GIT_AUTHOR_NAME:$GITHUB_PERSONAL_ACCESS_TOKEN@github.com/<org>/<repo>.git
-            git push --follow-tags origin master
-      - run:
-          name: Publish package
-          command: npm publish
 orbs:
   node: circleci/node@4.0.0
 workflows:
   build_app:
     jobs:
       - build
-      - publish:
-          filters:
-            branches:
-              only:
-                - master
