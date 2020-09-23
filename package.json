@@ -1,6 +1,6 @@
 {
   "name": "dz-js-client",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": "git@github.com:t-k-satoh/dz-js-client.git",
   "license": "MIT",
   "author": "t-k-satoh <syakuyanaoto@gmail.com>",
@@ -15,7 +15,7 @@
     "build": "tsdx build",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
-    "release": "standard-version",
+    "release": "standard-version && git push --follow-tags origin master && npm publish",
     "start": "tsdx watch",
     "test": "tsdx test"
   },
