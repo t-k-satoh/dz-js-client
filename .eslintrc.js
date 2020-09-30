@@ -22,6 +22,8 @@ module.exports = {
         'plugin:import/errors',
     ],
     rules: {
+        '@typescript-eslint/camelcase': 0,
+        '@typescript-eslint/ban-ts-ignore': 0,
         '@typescript-eslint/ban-ts-comment': 0,
         'import/order': [2, { alphabetize: { order: 'asc' } }],
     },

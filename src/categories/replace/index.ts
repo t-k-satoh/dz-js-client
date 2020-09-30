@@ -5,17 +5,18 @@ import { ResponseCategory, ResultCategory } from '../types';
 
 export type Response = ResponseCategory;
 
-export const create = async (
+export const replace = async (
     params: {
-        name: string;
-        nickName: string;
-        product: boolean;
+        id: string;
+        name?: string;
+        nickName?: string;
+        product?: boolean;
     },
     config?: AxiosRequestConfig,
 ): Promise<{ success: true; data: ResultCategory } | { success: false }> => {
     try {
-        const { data } = await instance.post<Response>(
-            PATH,
+        const { data } = await instance.put<Response>(
+            `${PATH}/${params.id}`,
             {
                 name: params.name,
                 nick_name: params.nickName,

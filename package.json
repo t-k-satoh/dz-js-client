@@ -17,7 +17,8 @@
     "prepare": "tsdx build",
     "release": "standard-version && git push --follow-tags origin master && npm publish",
     "start": "tsdx watch",
-    "test": "tsdx test"
+    "test": "tsdx test",
+    "test:watch": "tsdx test --watchAll"
   },
   "husky": {
     "hooks": {
@@ -26,11 +27,13 @@
   },
   "dependencies": {
     "axios": "^0.20.0",
+    "dotenv": "^8.2.0",
     "js-cookie": "^2.2.1"
   },
   "devDependencies": {
     "@types/js-cookie": "^2.2.6",
     "husky": "4.3.0",
+    "jest-mock-axios": "^4.2.1",
     "standard-version": "^9.0.0",
     "tsdx": "0.13.3",
     "tslib": "2.0.1",
