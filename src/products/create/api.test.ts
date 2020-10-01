@@ -37,7 +37,7 @@ describe(`API ${__dirname}`, () => {
         const name = `${process.env.ENV}-${generatedTime}-name`;
         const nickName = `${process.env.ENV}-${generatedTime}-nickName`;
         const description = `${process.env.ENV}-${generatedTime}-description`;
-        const releaseDate = '2020-08-30 13:54:50.893765+09';
+        const releaseDate = new Date().toISOString();
 
         const recommend = true;
         const _new = true;

@@ -47,8 +47,9 @@ describe(`API ${__dirname}`, () => {
                 },
             );
 
+            expect(retrieveRes.success).toBe(true);
+
             if (retrieveRes.success) {
-                expect(retrieveRes.success).toBe(true);
                 expect(retrieveRes.data.name).toBe(name);
                 expect(retrieveRes.data.caption).toBe(caption);
                 expect(retrieveRes.data.url).toBe(url);

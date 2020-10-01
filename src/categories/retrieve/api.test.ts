@@ -36,8 +36,9 @@ describe(`API ${__dirname}`, () => {
                 },
             );
 
+            expect(retrieveRes.success).toBe(true);
+
             if (retrieveRes.success) {
-                expect(retrieveRes.success).toBe(true);
                 expect(retrieveRes.data.name).toBe(name);
                 expect(retrieveRes.data.nickName).toBe(nickName);
                 expect(retrieveRes.data.product).toBe(product);

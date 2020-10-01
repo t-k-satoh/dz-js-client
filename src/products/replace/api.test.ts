@@ -37,7 +37,7 @@ describe(`API ${__dirname}`, () => {
         const name = `${process.env.ENV}-${generatedTime}-name`;
         const nickName = `${process.env.ENV}-${generatedTime}-nickName`;
         const description = `${process.env.ENV}-${generatedTime}-description`;
-        const releaseDate = '2020-08-30 13:54:50.893765+09';
+        const releaseDate = new Date().toISOString();
 
         const recommend = true;
         const _new = true;
@@ -75,7 +75,7 @@ describe(`API ${__dirname}`, () => {
             const replaceName = `${process.env.ENV}-${replaceTime}-name`;
             const replaceNickName = `${process.env.ENV}-${replaceTime}-nickName`;
             const replaceDescription = `${process.env.ENV}-${replaceTime}-description`;
-            const replaceReleaseDate = '2020-08-30 14:54:50.893765+09';
+            const replaceReleaseDate = new Date().toISOString();
 
             const replaceRecommend = false;
             const replaceNew = false;
@@ -102,8 +102,9 @@ describe(`API ${__dirname}`, () => {
                 },
             );
 
+            expect(replaceRes.success).toBe(true);
+
             if (replaceRes.success) {
-                expect(replaceRes.success).toBe(true);
                 expect(replaceRes.data).toEqual({
                     productId: createRes.data.productId,
                     categoryId: replaceCategoryId,
@@ -113,13 +114,15 @@ describe(`API ${__dirname}`, () => {
                     name: replaceName,
                     nickName: replaceNickName,
                     description: replaceDescription,
-                    releaseDate: '2020-08-30T05:54:50.893Z',
+                    releaseDate: replaceReleaseDate,
                     recommend: replaceRecommend,
                     new: replaceNew,
                     product,
                     createdAt: replaceRes.data.createdAt,
                     updatedAt: replaceRes.data.updatedAt,
                 });
+
+                expect(replaceRes.data.updatedAt).not.toBe(createRes.data.updatedAt);
             }
 
             await _delete(

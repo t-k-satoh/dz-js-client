@@ -52,8 +52,9 @@ describe(`API ${__dirname}`, () => {
                 },
             );
 
+            expect(replaceRes.success).toBe(true);
+
             if (replaceRes.success) {
-                expect(replaceRes.success).toBe(true);
                 expect(replaceRes.data.name).toBe(replaceName);
                 expect(replaceRes.data.caption).toBe(replaceCaption);
                 expect(replaceRes.data.url).toBe(replaceUrl);
