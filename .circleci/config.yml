@@ -18,7 +18,7 @@ commands:
           name: Cache Yarn dependencies
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/workspace/node_modules
+            - ~/.cache/yarn
 
 jobs:
   setup:
@@ -28,7 +28,7 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: yarn
+          command: yarn install --frozen-lockfile
       - save_yarn
 
   lint:
