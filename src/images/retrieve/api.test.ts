@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import { create, _delete } from '..';
 import { getToken } from '../../test/get-token';
 import { retrieve } from '.';
 
