@@ -1,8 +1,8 @@
 version: 2.1
 jobs:
   build:
-    executor:
-      name: node/default
+    docker:
+      - image: circleci/node:4.8.2
     steps:
       - checkout
       - restore_cache:
@@ -31,8 +31,6 @@ jobs:
       - run:
           name: Build
           command: yarn build
-orbs:
-  node: circleci/node@4.0.1
 workflows:
   build_app:
     jobs:
