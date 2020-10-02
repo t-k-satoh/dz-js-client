@@ -5,6 +5,10 @@ jobs:
       - image: 'cimg/base:stable'
     steps:
       - checkout
+      - restore_cache:
+          name: Yarn パッケージキャッシュを復元
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       - node/install:
           install-yarn: true
       - run: 
