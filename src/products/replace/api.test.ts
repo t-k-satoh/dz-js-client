@@ -121,8 +121,6 @@ describe(`API ${__dirname}`, () => {
                     createdAt: replaceRes.data.createdAt,
                     updatedAt: replaceRes.data.updatedAt,
                 });
-
-                expect(replaceRes.data.updatedAt).not.toBe(createRes.data.updatedAt);
             }
 
             await _delete(
