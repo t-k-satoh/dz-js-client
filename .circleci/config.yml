@@ -6,17 +6,17 @@ executors:
       - image: node:12
 
 commands:
-  restore_npm:
+  restore_yarn:
     steps:
       - restore_cache:
-          name: Restore npm dependencies
-          key: npm-{{ checksum "package.json" }}
+          name: Restore Yarn dependencies
+          key: yarn-packages-{{ checksum "yarn.lock" }}
 
-  save_npm:
+  save_yarn:
     steps:
       - save_cache:
-          name: Cache npm dependencies
-          key: npm-{{ checksum "package.json" }}
+          name: Cache Yarn dependencies
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/workspace/node_modules
 
@@ -28,41 +28,41 @@ jobs:
       - checkout
       - run:
           name: Install dependencies
-          command: npm install
-      - save_npm
+          command: yarn
+      - save_yarn
 
   lint:
     executor:
       name: default
     steps:
       - checkout
-      - restore_npm
+      - restore_yarn
       - run: 
           name: Lint
-          command: npm run lint
-      - save_npm
+          command: yarn lint
+      - save_yarn
 
   build:
     executor:
       name: default
     steps:
       - checkout
-      - restore_npm
+      - restore_yarn
       - run: 
           name: Build
-          command: npm run build
-      - save_npm
+          command: yarn build
+      - save_yarn
 
   test:
     executor:
       name: default
     steps:
       - checkout
-      - restore_npm
+      - restore_yarn
       - run: 
           name: Test
-          command: npm run test:unit
-      - save_npm
+          command: yarn test
+      - save_yarn
 
 workflows:
   pull-request:
