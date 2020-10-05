@@ -1,7 +1,6 @@
 version: 2.1
 executors:
   default:
-    working_directory: ~/workspace
     docker:
       - image: node:12
 
@@ -18,7 +17,7 @@ commands:
           name: Cache Yarn dependencies
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/workspace/node_modules
+             - ~/.cache/yarn
 
 jobs:
   setup:
