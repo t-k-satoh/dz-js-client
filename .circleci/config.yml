@@ -1,6 +1,7 @@
 version: 2.1
 executors:
   default:
+    working_directory: ~/workspace
     docker:
       - image: node:12
 
@@ -17,7 +18,7 @@ commands:
           name: Cache Yarn dependencies
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-             - ~/.cache/yarn
+            - ~/workspace/node_modules
 
 jobs:
   setup:
@@ -36,6 +37,7 @@ jobs:
     steps:
       - checkout
       - restore_yarn
+      - run: yarn install --frozen-lockfile
       - run: 
           name: Lint
           command: yarn lint
@@ -47,6 +49,7 @@ jobs:
     steps:
       - checkout
       - restore_yarn
+      - run: yarn install --frozen-lockfile
       - run: 
           name: Build
           command: yarn build
@@ -58,6 +61,7 @@ jobs:
     steps:
       - checkout
       - restore_yarn
+      - run: yarn install --frozen-lockfile
       - run: 
           name: Test
           command: yarn test
