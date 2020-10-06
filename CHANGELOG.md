@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/t-k-satoh/dz-js-client/compare/v0.0.7...v0.0.8) (2020-10-06)
+
+
+### Features
+
+* 🎸 add base url ([3e2c0f6](https://github.com/t-k-satoh/dz-js-client/commit/3e2c0f651f0b5fcc1076b89da002db6335ffd3a8))
+
 ### [0.0.7](https://github.com/t-k-satoh/dz-js-client/compare/v0.0.6...v0.0.7) (2020-10-06)
 
 ### [0.0.6](https://github.com/t-k-satoh/dz-js-client/compare/v0.0.5...v0.0.6) (2020-10-06)
