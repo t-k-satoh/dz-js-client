@@ -35,7 +35,8 @@
     "husky": "4.3.0",
     "jest-mock-axios": "4.2.1",
     "standard-version": "9.0.0",
-    "tsdx": "0.13.3",
+    "ts-jest": "^26.4.1",
+    "tsdx": "0.14.0",
     "tslib": "2.0.1",
     "typescript": "4.0.3"
   },
