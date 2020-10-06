@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 dotenv.config();
 
 export const instance = axios.create({
-    baseURL: process.env.BASE_URL,
+    baseURL: 'https://dz-api-express.herokuapp.com/api/v1/',
     withCredentials: true,
     timeout: 500000,
     headers: {
