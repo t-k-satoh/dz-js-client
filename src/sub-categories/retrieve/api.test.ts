@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
 import { create, _delete } from '..';
+import { list } from '../../categories';
 import { getToken } from '../../test/get-token';
-import { replace } from '.';
+import { retrieve } from '.';
 
 dotenv.config();
 
@@ -13,8 +14,16 @@ describe(`API ${__dirname}`, () => {
         const nickName = `${process.env.ENV}-${generatedTime}-nickName`;
         const product = false;
 
+        const { categories } = await list({
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        });
+        const ids = categories.map(category => category.categoryId);
+
         const createRes = await create(
             {
+                categoryId: ids[0],
                 name,
                 nickName,
                 product,
@@ -27,12 +36,8 @@ describe(`API ${__dirname}`, () => {
         );
 
         if (createRes.success) {
-            const replaceTime = new Date().toUTCString();
-            const replaceName = `${process.env.ENV}-${replaceTime}-name-replace`;
-            const replaceNickName = `${process.env.ENV}-${replaceTime}-nickName-replace`;
-
-            const replaceRes = await replace(
-                { id: createRes.data.categoryId, name: replaceName, nickName: replaceNickName },
+            const retrieveRes = await retrieve(
+                { id: createRes.data.subCategoryId },
                 {
                     headers: {
                         authorization: `Bearer ${token}`,
@@ -40,16 +45,17 @@ describe(`API ${__dirname}`, () => {
                 },
             );
 
-            expect(replaceRes.success).toBe(true);
+            expect(retrieveRes.success).toBe(true);
 
-            if (replaceRes.success) {
-                expect(replaceRes.data.name).toBe(replaceName);
-                expect(replaceRes.data.nickName).toBe(replaceNickName);
-                expect(replaceRes.data.product).toBe(product);
+            if (retrieveRes.success) {
+                expect(retrieveRes.data.name).toBe(name);
+                expect(retrieveRes.data.nickName).toBe(nickName);
+                expect(retrieveRes.data.categoryId).toBe(ids[0]);
+                expect(retrieveRes.data.product).toBe(product);
             }
 
             await _delete(
-                { id: createRes.data.categoryId },
+                { id: createRes.data.subCategoryId },
                 {
                     headers: {
                         authorization: `Bearer ${token}`,
