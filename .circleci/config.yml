@@ -1,39 +1,82 @@
 version: 2.1
-jobs:
-  build:
+executors:
+  default:
+    working_directory: ~/workspace
     docker:
-      - image: 'cimg/base:stable'
+      - image: node:12
+
+commands:
+  restore_yarn:
     steps:
-      - checkout
       - restore_cache:
-          name: Yarn パッケージキャッシュを復元
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      - node/install:
-          install-yarn: true
-      - run: 
-          name: Node のバージョンの確認
-          command: node --version
-      - run:
-          name: 依存関係をインストール
-          command: yarn install --frozen-lockfile
+          name: Restore Yarn dependencies
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+
+  save_yarn:
+    steps:
       - save_cache:
-          name: Yarn パッケージキャッシュを保存
+          name: Cache Yarn dependencies
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
+            - ~/workspace/node_modules
+
+jobs:
+  setup:
+    executor:
+      name: default
+    steps:
+      - checkout
       - run:
-          name: Lintを実行
+          name: Install dependencies
+          command: yarn install --frozen-lockfile
+      - save_yarn
+
+  lint:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_yarn
+      - run: yarn install --frozen-lockfile
+      - run: 
+          name: Lint
           command: yarn lint
-      - run:
-          name: テストを実行
-          command: yarn test --ci --coverage --maxWorkers=2
-      - run:
+      - save_yarn
+
+  build:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_yarn
+      - run: yarn install --frozen-lockfile
+      - run: 
           name: Build
           command: yarn build
-orbs:
-  node: circleci/node@4.0.0
+      - save_yarn
+
+  test:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_yarn
+      - run: yarn install --frozen-lockfile
+      - run: 
+          name: Test
+          command: yarn test
+      - save_yarn
+
 workflows:
-  build_app:
+  pull-request:
     jobs:
-      - build
+      - setup
+      - lint:
+          requires:
+            - setup
+      - build:
+          requires:
+            - lint
+      - test:
+          requires:
+            - build
