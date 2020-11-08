@@ -55,17 +55,6 @@ jobs:
           command: yarn build
       - save_yarn
 
-  test:
-    executor:
-      name: default
-    steps:
-      - checkout
-      - restore_yarn
-      - run: yarn install --frozen-lockfile
-      - run: 
-          name: Test
-          command: yarn test
-      - save_yarn
 
 workflows:
   pull-request:
@@ -77,6 +66,3 @@ workflows:
       - build:
           requires:
             - lint
-      - test:
-          requires:
-            - build
