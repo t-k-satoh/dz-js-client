@@ -3,7 +3,7 @@ executors:
   default:
     working_directory: ~/workspace
     docker:
-      - image: node:12
+      - image: node:12.22.12
 
 commands:
   restore_yarn:
